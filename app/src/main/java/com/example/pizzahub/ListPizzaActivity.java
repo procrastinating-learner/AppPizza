@@ -8,6 +8,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import com.example.pizzahub.adapter.PizzaAdapter;
 import com.example.pizzahub.classes.Produit;
 import com.example.pizzahub.service.ProduitService;
 
@@ -45,6 +47,18 @@ public class ListPizzaActivity extends  AppCompatActivity {
         ps.create(new Produit("PIZZA MARGHERITA",1,R.drawable.pizza9,"30 min","- 3 teaspoons active dry yeast\n- 1 cup warm water (110° to 115°)\n- 2 tablespoons olive oil\n- 1 teaspoon sugar\n- 1 teaspoon salt\n- 3 cups bread flour","A classic Pizza Margherita, named for Queen Margherita of Italy, shows off the colors of the Italian flag with red tomatoes, white mozzarella and fresh green basil. It's so scrumptious that you'll be glad the recipe makes not one but two 13-inch pizzas! —Loretta Lawrence, Myrtle Beach, South Carolina","STEP 1:\n\n  In a large mixing bowl, dissolve yeast in warm water. Add the oil, sugar, salt and 1 cup flour. Beat until smooth. Stir in enough remaining flour to form a soft dough.\n\nSTEP 2:\n\n  Turn onto a floured surface; knead until smooth and elastic, about 6-8 minutes. Place in a bowl coated with cooking spray, turning once to coat the top. Cover and let rise in a warm place until doubled, about 1 hour.\n\nSTEP 3:\n\n  Punch dough down; divide in half. Roll each portion into a 13-in. circle. Transfer to two 14-in. pizza pans coated with cooking spray; build up edges slightly. Cover and let rest for 10 minutes.\n\nSTEP 4:\n\n  Spoon tomatoes over crusts. Top with basil, cheese, oregano, pepper flakes, salt and pepper. Drizzle with oil. Bake at 450° for 15-20 minutes or until crust and cheese are golden brown. Yield: 2 pizzas (8 slices each)."));
 
         ps.create(new Produit("PEPPERONI-SAUSAGE STUFFED PIZZA",5,R.drawable.pizza10,"45 min","- 1 package (1/4 ounce) active dry yeast\n- 1-1/4 cups warm water (110° to 115°)\n- 2 tablespoons olive oil\n- 1-1/2 teaspoons salt\n- 1 teaspoon sugar\n- 3-1/2 to 4 cups all-purpose flour","For 30 years, friends have been telling me to open a pizzeria using this recipe. It even freezes well. —Elizabeth Wolff, Carmel, Indiana","STEP 1:\n\n  In a small bowl, dissolve yeast in warm water. In a large bowl, combine oil, salt, sugar, yeast mixture and 1 cup flour; beat on medium speed until smooth. Stir in enough remaining flour to form a stiff dough.\n\nSTEP 2:\n\n  Turn dough onto a floured surface; knead until smooth and elastic, about 6-8 minutes. Place in a greased bowl, turning once to grease the top. Cover with plastic wrap and let rise in a warm place until doubled, about 1 hour.\n\nSTEP 3:\n\n  Preheat oven to 425°. Grease a 13x9-in. baking pan. Punch down dough; divide into three portions. On a lightly floured surface, combine two portions of dough and roll into a 15x11-in. rectangle. Transfer to prepared pan, pressing onto bottom and up sides of pan. Top with 2 cups mozzarella cheese and 2 cups cheddar cheese. Sprinkle with flour, seasonings, cooked sausage, mushrooms and pepperoni.\n\nSTEP 4:\n\n  Roll out remaining dough into a 13x9-in. rectangle. Place dough over filling, crimping edges to seal; prick top with a fork. Sprinkle with remaining cheeses. Bake on a lower oven rack 10 minutes.\n\nSTEP 3:\n\n  Reduce oven setting to 375°. Spread pizza sauce over cheese. Bake 30-35 minutes longer or until edges are lightly browned. Let stand 10 minutes before cutting. If desired, sprinkle with Parmesan cheese. Yield: 12 servings."));
-
+        list=findViewById(R.id.list);
+        PizzaAdapter adapter=new PizzaAdapter(ps.findAll(),this);
+        list.setAdapter(adapter);
+        list.setOnItemClickListener((parent, view, position, id) -> {
+            Produit produit=(Produit) adapter.getItem(position);
+            Intent intent=new Intent(ListPizzaActivity.this, Detail.class);
+            intent.putExtra("photo",produit.getPhoto());
+            intent.putExtra("nom",produit.getNom());
+            intent.putExtra("description",produit.getDescription());
+            intent.putExtra("ingredient",produit.getDetailsIngred());
+            intent.putExtra("preparation",produit.getPreparation());
+            startActivity(intent);
+        });
     }
 }
