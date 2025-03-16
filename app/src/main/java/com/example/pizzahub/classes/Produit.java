@@ -11,7 +11,7 @@ public class Produit {
     private String duree;
     private String preparation;
 
-    public Produit(int nb_ingredients,String nom,int photo,String description,String detailsIngred,String duree,String preparation){
+    public Produit(String nom,int nb_ingredients,int photo,String duree,String detailsIngred,String description,String preparation){
         this.id = ++comp;
         this.nb_ingredients=nb_ingredients;
         this.nom=nom;
